@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Click Below to Capture a Photo</h2>
+    <button onclick="openCamera()">Open Camera</button>
+    <video id="video" autoplay></video>
+    <button onclick="capturePhoto()">Capture</button>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        
+        function openCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((err) => alert('Camera access denied!'));
+        }
+
+        function capturePhoto() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0);
+            const dataUrl = canvas.toDataURL('image/png');
+            console.log(dataUrl); //https://github.com/anand007v/Capture-Photo.git
+        }
+    </script>
+</body>
+</html>
